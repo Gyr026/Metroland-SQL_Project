@@ -3,6 +3,8 @@ go
 use UAS_DB
 go
 
+
+--Query to create tables based on ERD
 CREATE TABLE ToyType (
 ToyTypeID char(5) NOT NULL CHECK(ToyTypeID like 'TT[0-9][0-9][0-9]'), 
 ToyTypeName varchar(255) NOT NULL, 
@@ -63,6 +65,7 @@ QtySold int NOT NULL,
 SalesPrice int NOT NULL, 
 PRIMARY KEY (SalesID, ToyID));
 
+--Inserting data into each tables
 insert into ToyType values
 ('TT001', 'Action Figure'),
 ('TT002', 'RC-Cars'),
@@ -120,6 +123,7 @@ insert into SalesTransactionDetail values
 ('SA003', 'TY002', '2', '130000')
 
 --no 6
+--profitability report of sales transaction during the period Jan – Mar 2022. The report will show some require fields quantity of each sold toys type, purchase price, sales price, profit for each type, and the profitability percentage.
 select std.QtySold, t.ToyTypeID, ptd.PurchasePrice, std.SalesPrice,
 [Profit for each type] = std.SalesPrice - ptd.PurchasePrice,
 [Profitability Percentage] = concat(left((
@@ -130,6 +134,7 @@ join Toy t on std.ToyID = t.ToyID
 join PurchaseTransactionDetail ptd on t.ToyID = ptd.ToyID
 
 --no 7
+--report using subquery to show items that have not sold during Jan – Mar 2022.
 select ToyID, ToyName
 from Toy
 where not exists
@@ -142,6 +147,7 @@ where not exists
 )
 
 --no 8
+--view to display customer data, where the data is used to give the promotion. This view displays the customer's name, and the customer's phone number.
 go
 create view DisplayCustomerData as
 select CustomerName, CustomerPhone
